@@ -62,3 +62,70 @@ test('clicking button increments counter display', () => {
   expect(counterDisplay.text()).toContain(counter + 1)
 
 });
+
+test('clicking the button subtracts 1 from the counter', () => {
+  const counter = 5;
+  const wrapper = setup(null, { counter });
+
+  // find button and click
+  const button = findByTestAttr(wrapper, 'decrement-button');
+  button.simulate('click');
+
+  // find display and test value
+  const counterDisplay = findByTestAttr(wrapper, 'counter-display');
+  expect(counterDisplay.text()).toContain(counter - 1)
+
+});
+
+test('counter cant go below 0', () => {
+  const counter = 1;
+  const wrapper = setup(null, { counter });
+
+  // find button and click
+  const button = findByTestAttr(wrapper, 'decrement-button');
+  button.simulate('click');
+  button.simulate('click');
+  button.simulate('click');
+  button.simulate('click');
+  button.simulate('click');
+
+  // find display and test value
+  const counterDisplay = findByTestAttr(wrapper, 'counter-display');
+  expect(counterDisplay.text()).toContain(0)
+
+});
+
+test('display an error message saying the counter can\'t go below zero', () => {
+
+  // if the counter is at 0 and the decrement button is clicked:
+  // don't decrement the counter
+  const counter = 1;
+  const wrapper = setup(null, { counter });
+
+  // find button and click
+  const button = findByTestAttr(wrapper, 'decrement-button');
+  button.simulate('click');
+  button.simulate('click');
+
+  // find display and test value
+  const errorText = findByTestAttr(wrapper, 'error-text');
+  console.log(errorText)
+  expect(errorText.length).toBe(1)
+
+
+});
+
+test('Remove error when increment button is clicked', () => {
+
+  // If error is showing and increment button is clicked, clear the error.
+  const wrapper = setup(null, { counter: 0, error: true });
+
+  // find button and click
+  const button = findByTestAttr(wrapper, 'increment-button');
+  button.simulate('click');
+
+  // find display and test value
+  const errorText = findByTestAttr(wrapper, 'error-text');
+
+  expect(errorText.length).toBe(0)
+});

@@ -1,4 +1,11 @@
+import React from 'react';
 import checkPropTypes from 'check-prop-types';
+
+
+
+
+
+
 
 /**
  * Return node(s) with the given data-test attribute.
@@ -23,3 +30,5 @@ export const checkProps = (component, conformingProps) => {
     component.name);
   expect(propError).toBeUndefined();
 }
+
+
